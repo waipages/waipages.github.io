@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#000000">
+<title>WAI.PAGES.DEV</title>
+<meta name="description" content="WAI.PAGES.DEV | Web Ai">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2225%22 fill=%22%232E2EFF%22/><text x=%2250%%22 y=%2254%%22 dominant-baseline=%22central%22 text-anchor=%22middle%22 fill=%22white%22 font-family=%22sans-serif%22 font-weight=%22900%22 font-size=%2265%22>W</text></svg>">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config={theme:{extend:{colors:{accent:'#2E2EFF'},animation:{'fade-in':'fadeIn 1s ease-out forwards','slide-up':'slideUp 0.8s ease-out forwards'},keyframes:{fadeIn:{'0%':{opacity:'0'},'100%':{opacity:'1'}},slideUp:{'0%':{transform:'translateY(20px)',opacity:'0'},'100%':{transform:'translateY(0)',opacity:'1'}}}}}}
+</script>
+<script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<script src="https://unpkg.com/lucide@latest"></script>
+<style>
+body{background:#000;margin:0;overflow-x:hidden;color:#fff;font-family:ui-sans-serif,system-ui,-apple-system,sans-serif}
+[data-lucide]{visibility:hidden}.lucide{visibility:visible!important}
+.custom-scrollbar::-webkit-scrollbar{width:4px}.custom-scrollbar::-webkit-scrollbar-track{background:transparent}.custom-scrollbar::-webkit-scrollbar-thumb{background:#2E2EFF;border-radius:10px}
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel">
+const {useState,useEffect,useRef}=React;
+const Icon=({name,className})=>(useEffect(()=>{if(window.lucide)window.lucide.createIcons()},[name]),<i data-lucide={name} className={className}></i>);
+const StarField=()=>{
+const canvasRef=useRef(null);
+useEffect(()=>{
+const canvas=canvasRef.current,ctx=canvas.getContext('2d');
+let animationFrameId,stars=Array.from({length:333},()=>({x:Math.random()*1600-800,y:Math.random()*1600-800,z:Math.random()*1600}));
+const resize=()=>{canvas.width=window.innerWidth;canvas.height=window.innerHeight};
+const animate=()=>{
+ctx.clearRect(0,0,canvas.width,canvas.height);
+const cX=canvas.width/2,cY=canvas.height/2;
+stars.forEach(s=>{
+s.z-=1.5;if(s.z<=0){s.z=1600;s.x=Math.random()*1600-800;s.y=Math.random()*1600-800}
+const k=128/s.z,px=s.x*k+cX,py=s.y*k+cY;
+if(px>=0&&px<=canvas.width&&py>=0&&py<=canvas.height){
+const size=(1-s.z/1600)*2.5,opacity=(1-s.z/1600)*0.5+0.5;
+ctx.fillStyle=`rgba(255,255,255,${opacity})`;ctx.beginPath();ctx.arc(px,py,size/2,0,Math.PI*2);ctx.fill()
+}
+});
+animationFrameId=requestAnimationFrame(animate)
+};
+resize();animate();
+window.addEventListener('resize',resize);
+return()=>{cancelAnimationFrame(animationFrameId);window.removeEventListener('resize',resize)}
+},[]);
+return <canvas ref={canvasRef} className="fixed inset-0 pointer-events-none z-0 opacity-100"/>
+};
+const Modal=({isOpen,onClose,title,children})=>(!isOpen?null:(
+<div className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-8 animate-fade-in">
+<div className="absolute inset-0 bg-black/80 backdrop-blur-xl" onClick={onClose}/>
+<div className="relative w-full max-w-3xl max-h-[85vh] bg-black border border-white/10 rounded-[40px] shadow-2xl overflow-hidden flex flex-col animate-slide-up">
+<div className="absolute top-0 left-0 w-full h-1 bg-accent"/>
+<div className="p-8 md:p-12 overflow-y-auto custom-scrollbar">
+<div className="space-y-6 text-left">
+<div className="space-y-2">
+<p className="text-accent font-black text-3xl md:text-2xl tracking-tighter">{title}</p>
+{children}
+</div>
+</div>
+</div>
+<button onClick={onClose} aria-label="Close modal" className="absolute top-6 right-6 w-12 h-12 bg-accent text-white rounded-full flex items-center justify-center shadow-lg hover:scale-110 active:scale-95 transition-all z-20 group">
+<Icon name="x" className="w-6 h-6 group-hover:rotate-90 transition-transform"/>
+</button>
+</div>
+</div>
+));
+const App=()=>{
+const [isVisible,setIsVisible]=useState(false);
+const [modal,setModal]=useState(null);
+useEffect(()=>setIsVisible(true),[]);
+const features=[
+{title:"Neural Core",icon:"brain",desc:"Deep learning models & interfaces optimized for adaptive & real-time decision making",content:(
+<>
+<p className="text-white font-bold text-xl">Powering Adaptive Decision Making with Ai</p>
+<p className="text-white/80 font-medium">Unlock the full potential of your decision-making processes with our Neural Core deep learning models</p>
+<p className="text-white/70 leading-relaxed pt-4">Neural Core is a cutting-edge Ai solution designed to optimize decision-making processes in real-time. By leveraging the power of deep learning, Neural Core enables organizations to make informed, data-driven decisions that adapt to changing circumstances and environments.</p>
+<div className="pt-4 space-y-4">
+<h4 className="text-accent font-black tracking-widest text-sm">Key Features</h4>
+<ul className="space-y-3">{[
+{l:"Adaptive Decision Making",t:"Neural Core's Ai models learn from data and adapt to new information in real-time, ensuring that decisions are always up-to-date and relevant."},
+{l:"Real-time Processing",t:"Our deep learning models process vast amounts of data at incredible speeds, providing instant insights and recommendations."},
+{l:"Scalability",t:"Neural Core is designed to scale with your organization, handling complex workflows and large datasets with ease."},
+{l:"Integration",t:"Seamlessly integrate Neural Core with your existing systems and processes, ensuring a smooth transition to Ai-driven decision making."}
+].map((i,x)=><li key={x} className="flex gap-3"><div className="mt-1.5 w-1.5 h-1.5 rounded-full bg-accent shrink-0"/><p className="text-white/70 text-base md:text-sm"><strong className="text-white">{i.l}:</strong> {i.t}</p></li>)}</ul>
+</div>
+<div className="pt-4 space-y-4">
+<h4 className="text-accent font-black tracking-widest text-sm">How it Works</h4>
+<ol className="space-y-3">{[
+{l:"Data Ingestion",t:"Neural Core collects and processes vast amounts of data from various sources, including internal and external sources."},
+{l:"Model Training",t:"Our deep learning models are trained on the ingested data, learning patterns and relationships that inform decision making."},
+{l:"Decision Making",t:"Neural Core applies the trained models to real-time data, providing informed recommendations and insights for adaptive decision making."}
+].map((i,x)=><li key={x} className="flex gap-3"><span className="text-accent font-black text-base md:text-sm">{x+1}.</span><p className="text-white/70 text-base md:text-sm"><strong className="text-white">{i.l}:</strong> {i.t}</p></li>)}</ol>
+</div>
+<div className="pt-4 space-y-4">
+<h4 className="text-accent font-black tracking-widest text-sm">Benefits</h4>
+<ul className="space-y-3">{[
+{l:"Improved Decision Quality",t:"Neural Core's Ai-driven decision making ensures that decisions are based on accurate and up-to-date information."},
+{l:"Increased Efficiency",t:"Our real-time processing capabilities save you time and resources, allowing you to focus on strategic initiatives."},
+{l:"Better Outcomes",t:"Neural Core's adaptability and scalability ensure that your organization stays ahead of the competition and achieves optimal results."}
+].map((i,x)=><li key={x} className="flex gap-3"><div className="mt-1.5 w-1.5 h-1.5 rounded-full bg-accent shrink-0"/><p className="text-white/70 text-base md:text-sm"><strong className="text-white">{i.l}:</strong> {i.t}</p></li>)}</ul>
+</div>
+<p className="text-accent font-black text-center pt-4 border-t border-white/10">Unlock the full potential of Neural Core and revolutionize your decision-making processes today!</p>
+</>
+)},
+{title:"UAi Conform",icon:"u-circle",desc:"Follows the rules of Understandable Ai. Simplicity & Cognitive Load Reduction",content:(
+<>
+<p className="text-white font-bold text-xl">Simplifying Ai Adoption with Understandable Ai</p>
+<p className="text-white/80 font-medium">Unlock the full potential of Ai with our UAi Conform solution, designed to follow the rules of Understandable Ai</p>
+<p className="text-white/70 leading-relaxed pt-4">UAi Conform is a pioneering approach that aligns Ai solutions with human values, ensuring seamless and efficient adoption of Ai in various sectors. By adhering to the principles of Understandable Ai, we empower organizations to harness the power of Ai while prioritizing user experience and simplicity.</p>
+<div className="pt-4 space-y-4">
+<h4 className="text-accent font-black tracking-widest text-sm">Key Features</h4>
+<ul className="space-y-3">{[
+{l:"Simplification",t:"UAi Conform simplifies Ai-driven interfaces, making them more intuitive and user-friendly, reducing cognitive load and improving adoption rates."},
+{l:"Contextual Understanding",t:"Our approach ensures that Ai-driven decisions are rooted in human values and contextual understanding, promoting trust and confidence in Ai-driven processes."},
+{l:"Efficiency",t:"UAi Conform's simplified interfaces and adaptable workflows increase productivity and efficiency, allowing organizations to focus on strategic goals."},
+{l:"Flexibility",t:"Seamlessly integrate UAi Conform with various Ai systems and platforms, ensuring a smooth transition to Understandable Ai."}
+].map((i,x)=><li key={x} className="flex gap-3"><div className="mt-1.5 w-1.5 h-1.5 rounded-full bg-accent shrink-0"/><p className="text-white/70 text-sm"><strong className="text-white">{i.l}:</strong> {i.t}</p></li>)}</ul>
+</div>
+<div className="pt-4 space-y-4">
+<h4 className="text-accent font-black tracking-widest text-sm">How it Works</h4>
+<ol className="space-y-3">{[
+{l:"Assessment",t:"We assess your current Ai solutions and workflows, identifying areas for simplification and improvement."},
+{l:"Design & Development",t:"Our team designs and develops UAi Conform-compliant interfaces and workflows, prioritizing simplicity and contextual understanding."},
+{l:"Implementation",t:"We implement UAi Conform solutions, ensuring seamless integration with your existing systems and processes."}
+].map((i,x)=><li key={x} className="flex gap-3"><span className="text-accent font-black text-sm">{x+1}.</span><p className="text-white/70 text-sm"><strong className="text-white">{i.l}:</strong> {i.t}</p></li>)}</ol>
+</div>
+<div className="pt-4 space-y-4">
+<h4 className="text-accent font-black tracking-widest text-sm">Benefits</h4>
+<ul className="space-y-3">{[
+{l:"Improved Adoption Rates",t:"UAi Conform's simplified interfaces and workflows increase user adoption and acceptance of Ai solutions."},
+{l:"Enhanced User Experience",t:"Our contextual approach ensures that Ai-driven decisions are rooted in human values, promoting trust and confidence in Ai-driven processes."},
+{l:"Increased Productivity",t:"UAi Conform's efficient workflows and simplified interfaces save time and resources, allowing organizations to focus on strategic initiatives."}
+].map((i,x)=><li key={x} className="flex gap-3"><div className="mt-1.5 w-1.5 h-1.5 rounded-full bg-accent shrink-0"/><p className="text-white/70 text-sm"><strong className="text-white">{i.l}:</strong> {i.t}</p></li>)}</ul>
+</div>
+<p className="text-accent font-black text-center pt-4 border-t border-white/10">Embracing UAi Conform and unlock the full potential of Ai in your organization today!</p>
+</>
+)},
+{title:"Grand 7",icon:"heptagon-7",desc:"Transparency, Privacy, Understandability, Reliability, Security, Accountability, Integrity",content:(
+<>
+<p className="text-white font-bold text-xl">The Foundational Pillars of Trustworthy Ai</p>
+<p className="text-white/80 font-medium">Empowering organizations with the Grand 7 framework, a set of principles ensuring Transparency, Privacy, Understandability, Reliability, Security, Accountability, and Integrity in Ai development and use</p>
+<p className="text-white/70 leading-relaxed pt-4">Grand 7 is a comprehensive framework for building trustworthy Ai systems. By establishing a set of seven core principles, Grand 7 provides a foundation for organizations to develop Ai solutions that prioritize both human values and technological capabilities.</p>
+<div className="pt-4 space-y-4">
+<h4 className="text-accent font-black tracking-widest text-sm">Key Principles</h4>
+<ul className="space-y-3">{[
+{l:"Transparency",t:"Grand 7 promotes open communication and clear explanations of Ai-driven decisions and processes."},
+{l:"Privacy",t:"Our framework ensures the secure handling of sensitive data and respect for individuals' rights."},
+{l:"Understandability",t:"Grand 7 advocates for Ai-driven interfaces that are easy to use and understand, reducing errors and misadventures."},
+{l:"Reliability",t:"We prioritize the accuracy and dependability of Ai-driven decisions and recommendations."},
+{l:"Security",t:"Grand 7 ensures the protection of sensitive information and systems from unauthorized access or manipulation."},
+{l:"Accountability",t:"Our framework holds Ai developers and users accountable for their actions and decisions."},
+{l:"Integrity",t:"Grand 7 promotes the ethical use of Ai, upholding human values and principles."}
+].map((i,x)=><li key={x} className="flex gap-3"><div className="mt-1.5 w-1.5 h-1.5 rounded-full bg-accent shrink-0"/><p className="text-white/70 text-sm"><strong className="text-white">{i.l}:</strong> {i.t}</p></li>)}</ul>
+</div>
+<div className="pt-4 space-y-4">
+<h4 className="text-accent font-black tracking-widest text-sm">Benefits</h4>
+<ul className="space-y-3">{[
+{l:"Established Trust",t:"Grand 7's emphasis on transparency, privacy, and understandability builds trust between organizations and their stakeholders."},
+{l:"Reduced Risk",t:"By prioritizing security and accountability, Grand 7 minimizes the risk of errors and malicious actions."},
+{l:"Improved Outcomes",t:"Our framework leads to more informed, reliable, and responsible Ai-driven decisions."},
+{l:"Compliance",t:"Grand 7 ensures that Ai solutions align with regulatory requirements and industry standards."}
+].map((i,x)=><li key={x} className="flex gap-3"><div className="mt-1.5 w-1.5 h-1.5 rounded-full bg-accent shrink-0"/><p className="text-white/70 text-sm"><strong className="text-white">{i.l}:</strong> {i.t}</p></li>)}</ul>
+</div>
+<p className="text-accent font-black text-center pt-4 border-t border-white/10">Join the Grand 7 movement and build trustworthy Ai systems that prioritize human values and capabilities today!</p>
+</>
+)}
+];
+const aboutContent=(
+<>
+<p className="text-white font-bold text-xl">Found & Owned by Jan Klein, The Architect of UAi, Understandable Ai & Passionate Advocate for Responsible Tech</p>
+<p className="text-white/70 leading-relaxed pt-4">As the Architect of Understandable Ai, Jan Klein is a visionary leader driving the transformation of Artificial Intelligence towards a more human-centric approach. With a deep understanding of the intricate relationships between technology and society, Jan's work focuses on making Ai systems more transparent, accountable, and respectful of human values.</p>
+<div className="pt-4 space-y-4">
+<h4 className="text-accent font-black tracking-widest text-sm">Background & Expertise</h4>
+<ul className="space-y-3">
+<li className="flex gap-3"><div className="mt-1.5 w-1.5 h-1.5 rounded-full bg-accent shrink-0"/><p className="text-white/70 text-sm">Creates & Supports Open Source Initiatives & Products. Professional Digital Planner. 100% Private, No Accounts, No Login, Offline First, Free Forever. <a href="https://p3c.netlify.app" target="_blank" className="text-accent font-bold hover:underline">p3c.netlify.app</a></p></li>
+<li className="flex gap-3"><div className="mt-1.5 w-1.5 h-1.5 rounded-full bg-accent shrink-0"/><p className="text-white/70 text-sm">Jan Klein is also a member of the <a href="https://www.w3.org/community/aikr/wiki/User:Janklein" target="_blank" className="text-accent font-bold hover:underline">W3C</a>, contributing to the Ai Knowledge Representation & Cognitive Ai community.</p></li>
+<li className="flex gap-3"><div className="mt-1.5 w-1.5 h-1.5 rounded-full bg-accent shrink-0"/><p className="text-white/70 text-sm">Contributes to the Google Ai Developer Forum about <a href="https://discuss.ai.google.dev/t/understandable-ai/38587" target="_blank" className="text-accent font-bold hover:underline">Understandable Ai</a> & to the Google Cloud Developer Forum <a href="https://discuss.google.dev/t/app-build-with-google-ai-studio/288747" target="_blank" className="text-accent font-bold hover:underline">App Build with Google Ai Studio</a></p></li>
+<li className="flex gap-3"><div className="mt-1.5 w-1.5 h-1.5 rounded-full bg-accent shrink-0"/><p className="text-white/70 text-sm">Jan's areas of expertise in Ai, Business, Government, Social Sector, Education, Information & Communications Technology, Media & Information, and Arts make him a versatile speaker and thought leader.</p></li>
+</ul>
+</div>
+<div className="pt-4 space-y-4">
+<h4 className="text-accent font-black tracking-widest text-sm">Mission & Vision</h4>
+<ul className="space-y-3">{[
+{l:"Make Ai a Force for Good",t:"Jan's mission is to empower organizations and individuals to build Ai systems that benefit society as a whole."},
+{l:"Establish Ai Ethics",t:"He aims to develop and promote standards for responsible Ai development, ensuring Ai systems align with human values and principles."},
+{l:"Facilitate Human-Ai Collaboration",t:"Jan's vision is to create Ai systems that are transparent, explainable, and accountable, enabling humans to work alongside Ai in harmony."},
+{l:"Respecting Human Values",t:"Ai systems must be grounded in human values such as empathy, compassion, and respect for human rights and dignity."}
+].map((i,x)=><li key={x} className="flex gap-3"><div className="mt-1.5 w-1.5 h-1.5 rounded-full bg-accent shrink-0"/><p className="text-white/70 text-sm"><strong className="text-white">{i.l}:</strong> {i.t}</p></li>)}</ul>
+</div>
+<div className="pt-4 space-y-4">
+<h4 className="text-accent font-black tracking-widest text-sm">Professional Affiliations & Credentials</h4>
+<ul className="space-y-3 text-sm">
+<li className="flex gap-3"><div className="mt-1.5 w-1.5 h-1.5 rounded-full bg-accent shrink-0"/><p className="text-white/70">CEO at <a href="https://dev.ucoz.org" target="_blank" className="text-accent font-bold hover:underline">dev.ucoz.org</a> App & Web Development | SEO</p></li>
+<li className="flex gap-3"><div className="mt-1.5 w-1.5 h-1.5 rounded-full bg-accent shrink-0"/><p className="text-white/70">Google Developer Expert: <a href="https://g.dev/janklein" target="_blank" className="text-accent font-bold hover:underline">g.dev/janklein</a></p></li>
+<li className="flex gap-3"><div className="mt-1.5 w-1.5 h-1.5 rounded-full bg-accent shrink-0"/><p className="text-white/70">Ai Researcher & Research Director at AiCS</p></li>
+<li className="flex gap-3"><div className="mt-1.5 w-1.5 h-1.5 rounded-full bg-accent shrink-0"/><p className="text-white/70">W3C Member: Ai Knowledge Representation & Cognitive Ai</p></li>
+</ul>
+</div>
+<div className="pt-4 space-y-4">
+<h4 className="text-accent font-black tracking-widest text-sm">Research Interests & Areas of Expertise</h4>
+<div className="grid grid-cols-1 sm:grid-cols-2 gap-4">{[
+{l:"Arts",t:"Ai & Art, Human-Centered Design, Creativity & Innovation"},
+{l:"Business",t:"Entrepreneurship, Management, Finance, Marketing, Operations"},
+{l:"Government",t:"Public Policy, Governance, Public Administration, International Relations"},
+{l:"Social Sector",t:"Social Impact, Social Entrepreneurship, Non-Profit Management, Community Development"},
+{l:"Education",t:"Learning Science, Educational Technology, Pedagogy, Curriculum Design"},
+{l:"ICT",t:"App & Web Development"},
+{l:"Media & Info",t:"Media Studies, Communications, Information Studies, Journalism"},
+{l:"Research",t:"Ai & UAi Research, Research Direction at AiCS, Cognitive Ai Research"}
+].map((i,x)=><div key={x} className="p-3 bg-white/5 rounded-xl border border-white/5"><p className="text-white font-bold text-xs uppercase tracking-wider mb-1">{i.l}</p><p className="text-white/60 text-[11px] leading-tight">{i.t}</p></div>)}</div>
+</div>
+<p className="text-accent font-black text-center pt-4 border-t border-white/10">Get in touch with Jan & Learn More About WAI.PAGES.DEV</p>
+</>
+);
+return (
+<div className={`min-h-screen flex flex-col items-center bg-black text-white selection:bg-accent transition-opacity duration-1000 ${isVisible?'opacity-100':'opacity-0'}`}>
+<StarField/>
+<div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-accent/10 rounded-full blur-[150px] pointer-events-none"/>
+<nav className="fixed top-0 left-0 w-full p-4 md:p-6 flex justify-between items-center z-50 bg-transparent">
+<div className="text-lg md:text-xl font-bold tracking-tighter animate-fade-in">WAI.PAGES.DEV</div>
+<a href="tel:+31685373879" aria-label="Call us" className="flex items-center gap-2 px-4 py-2 bg-white/5 hover:bg-white/10 border border-white/10 rounded-full transition-all text-sm font-bold tracking-tighter group">
+<Icon name="phone" className="w-4 h-4 text-accent group-hover:scale-110 transition-transform"/><span>+31 6 85373879</span>
+</a>
+</nav>
+<main className="relative z-10 max-w-6xl w-full text-center pt-40 pb-20 px-4 flex flex-col items-center space-y-12">
+<div className="space-y-6 animate-slide-up">
+<h1 className="text-6xl md:text-8xl font-black tracking-tight leading-none text-accent drop-shadow-[0_0_30px_rgba(46,46,255,0.3)]">Web Ai</h1>
+<p className="text-white text-xl md:text-xl max-w-3xl font-bold leading-tight">We build intelligence for the web. Systems that understand intent & act autonomously.</p>
+</div>
+<div className="flex flex-col sm:flex-row gap-4 animate-slide-up" style={{animationDelay:'0.2s'}}>
+<a href="tel:+31685373879" className="w-48 px-6 py-4 bg-accent text-white rounded-2xl font-black flex items-center justify-center gap-3 transition-all hover:scale-105 shadow-[0_10px_40px_rgba(46,46,255,0.4)]"><Icon name="phone" className="w-6 h-6"/>Call Us</a>
+<button onClick={()=>setModal({title:"About WAI.PAGES.DEV",content:aboutContent})} className="w-48 px-6 py-4 bg-white/5 hover:bg-accent/20 border border-white/10 rounded-2xl font-black flex items-center justify-center gap-3 text-white transition-all hover:border-accent/50 group"><Icon name="info" className="w-6 h-6 text-accent group-hover:scale-110 transition-transform"/>About</button>
+</div>
+<div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full pt-16 animate-slide-up" style={{animationDelay:'0.4s'}}>
+{features.map((f,i)=>(
+<div key={i} onClick={()=>setModal({title:f.title,content:f.content})} className="p-8 rounded-3xl bg-white/[0.02] border border-white/5 text-center hover:border-accent/30 transition-all duration-500 group relative cursor-pointer overflow-hidden">
+<div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-accent/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"/>
+<div className="w-14 h-14 mx-auto rounded-2xl bg-white/5 flex items-center justify-center mb-6 group-hover:bg-accent transition-all duration-500 group-hover:shadow-[0_0_30px_rgba(46,46,255,0.4)]">
+{f.icon==="brain"?(<div className="w-10 h-10 rounded-xl border-[3px] border-accent group-hover:border-white flex items-center justify-center transition-colors"><Icon name="brain" className="w-6 h-6 text-accent group-hover:text-white transition-colors"/></div>):f.icon==="u-circle"?(<div className="w-10 h-10 rounded-full border-[3px] border-accent group-hover:border-white flex items-center justify-center transition-colors"><span className="text-accent group-hover:text-white font-black text-xl">U</span></div>):f.icon==="heptagon-7"?(<div className="relative w-10 h-10 flex items-center justify-center"><svg viewBox="0 0 100 100" className="absolute inset-0 w-full h-full fill-none stroke-accent group-hover:stroke-white stroke-[8] transition-colors rotate-180"><path d="M 50 5 L 89.1 24.1 L 99.2 67.4 L 72.3 98.4 L 27.7 98.4 L 0.8 67.4 L 10.9 24.1 Z"/></svg><span className="text-accent group-hover:text-white font-black text-xl z-10 transition-colors">7</span></div>):<Icon name={f.icon} className="w-7 h-7 text-accent group-hover:text-white transition-colors"/>}
+</div>
+<h3 className="font-black text-xl mb-2">{f.title}</h3>
+<p className="text-white/60 text-base md:text-sm leading-relaxed">{f.desc}</p>
+</div>
+))}
+</div>
+</main>
+<footer className="w-full py-12 px-6 flex flex-col items-center space-y-8 bg-transparent border-t border-white/5 relative z-10">
+<div className="flex gap-6">
+{[{i:"linkedin",u:"https://www.linkedin.com/in/jankleinx/"},{i:"github",u:"https://github.com/JanKleinX"}].map((s,x)=>(
+<a key={x} href={s.u} target="_blank" rel="noopener noreferrer" aria-label={s.i} className="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center border border-white/10 hover:bg-accent hover:border-accent transition-all group">
+<Icon name={s.i} className="w-5 h-5 text-white group-hover:scale-110 transition-transform"/>
+</a>
+))}
+</div>
+<div className="text-white/40 text-[10px] tracking-[0.2em] font-black">© 2026 WAI.PAGES.DEV</div>
+</footer>
+<Modal isOpen={!!modal} onClose={()=>setModal(null)} title={modal?.title}>{modal?.content}</Modal>
+</div>
+);
+};
+ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+</script>
+</body>
+</html>
