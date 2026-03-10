@@ -237,6 +237,9 @@ return (
 <a href="tel:+31685373879" className="w-48 px-6 py-4 bg-accent text-white rounded-2xl font-black flex items-center justify-center gap-3 transition-all hover:scale-105 shadow-[0_10px_40px_rgba(46,46,255,0.4)]"><Icon name="phone" className="w-6 h-6"/>Call Us</a>
 <button onClick={()=>setModal({title:"About WAI.PAGES.DEV",content:aboutContent})} className="w-48 px-6 py-4 bg-white/5 hover:bg-accent/20 border border-white/10 rounded-2xl font-black flex items-center justify-center gap-3 text-white transition-all hover:border-accent/50 group"><Icon name="info" className="w-6 h-6 text-accent group-hover:scale-110 transition-transform"/>About</button>
 </div>
+<div className="animate-bounce pt-8 opacity-50 hover:opacity-100 transition-opacity cursor-pointer" onClick={() => window.scrollTo({ top: window.innerHeight, behavior: 'smooth' })}>
+<img src="https://raw.githubusercontent.com/waipages/waipages.github.io/fec1dfe8f20f504afdcdb2c6aef001bdd91de420/WEB.PAGES.DEV.svg" alt="Scroll Down" className="w-12 h-12 mx-auto" referrerPolicy="no-referrer" />
+</div>
 <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full pt-16 animate-slide-up" style={{animationDelay:'0.4s'}}>
 {features.map((f,i)=>(
 <div key={i} onClick={()=>setModal({title:f.title,content:f.content})} className="p-8 rounded-3xl bg-white/[0.02] border border-white/5 text-center hover:border-accent/30 transition-all duration-500 group relative cursor-pointer overflow-hidden">
