@@ -73,6 +73,7 @@ const Modal=({isOpen,onClose,title,children})=>(!isOpen?null:(
 const App=()=>{
 const [isVisible,setIsVisible]=useState(false);
 const [modal,setModal]=useState(null);
+const [imageError, setImageError] = useState(false);
 useEffect(()=>setIsVisible(true),[]);
 const features=[
 {title:"Neural Core",icon:"brain",desc:"Deep learning models & interfaces optimized for adaptive & real-time decision making",content:(
@@ -252,20 +253,35 @@ return (
 </div>
 ))}
 </div>
-{/* JAN-KLEIN-OFFICIAL.png - Now using a working image from the repository with 200x200 size */}
-<div className="w-full pt-16 flex justify-center animate-slide-up" style={{animationDelay:'0.6s'}}>
-<div className="bg-white/5 p-4 rounded-3xl border border-white/10 inline-block">
-<img 
-src="https://raw.githubusercontent.com/waipages/waipages.github.io/b4e6d67c4ca4c963eca7b64c4c84237fd4cb5916/JAN-KLEIN-OFFICIAL.png" 
-alt="Jan Klein Official" 
-width="200" 
-height="200"
-className="rounded-2xl"
-style={{width: '200px', height: '200px', objectFit: 'cover'}}
-/>
-<p className="text-accent font-bold mt-2 text-sm">JAN KLEIN OFFICIAL</p>
+{/* JAN-KLEIN-OFFICIAL.png - FORCED VISIBLE with inline styles */}
+<div className="w-full pt-16 flex justify-center items-center animate-slide-up relative" style={{animationDelay:'0.6s', zIndex: 999}}>
+  <div className="bg-gradient-to-r from-accent/20 to-transparent p-1 rounded-3xl">
+    <div className="bg-black p-4 rounded-3xl border-2 border-accent/50">
+      <img 
+        src="https://raw.githubusercontent.com/waipages/waipages.github.io/refs/heads/main/JAN-KLEIN-OFFICIAL.png" 
+        alt="Jan Klein Official" 
+        width="200" 
+        height="200"
+        style={{
+          width: '200px',
+          height: '200px',
+          objectFit: 'cover',
+          borderRadius: '16px',
+          display: 'block',
+          border: '3px solid #2E2EFF',
+          boxShadow: '0 0 30px rgba(46,46,255,0.5)'
+        }}
+        onError={(e) => {
+          console.log('Image failed to load - showing fallback text');
+          e.target.style.display = 'none';
+          e.target.parentNode.innerHTML += '<div style="width:200px;height:200px;display:flex;align-items:center;justify-content:center;background:#2E2EFF;color:white;font-weight:bold;border-radius:16px;">JAN KLEIN</div>';
+        }}
+      />
+    </div>
+  </div>
 </div>
-</div>
+{/* Debug text to confirm section is rendered */}
+<div className="text-accent text-xs mt-2 opacity-50">JAN KLEIN OFFICIAL - Should be visible above</div>
 </main>
 <footer className="w-full py-12 px-6 flex flex-col items-center space-y-8 bg-transparent border-t border-white/5 relative z-10">
 <div className="flex gap-6">
