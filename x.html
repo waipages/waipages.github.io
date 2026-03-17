@@ -266,18 +266,15 @@ return (
 {/* Debug text to confirm section is rendered */}
 <div className="text-accent text-xs mt-2 opacity-50">JAN KLEIN OFFICIAL - Should be visible above</div>
 </main>
-  {/* ADD THIS EXACT CODE - JUST THE IMAGE */}
+
+  </main>
+{/* ADD THIS EXACT CODE - JUST THE IMAGE */}
 <div className="w-full flex justify-center">
   <img src="https://raw.githubusercontent.com/waipages/waipages.github.io/refs/heads/main/JAN-KLEIN-OFFICIAL.png" />
 </div>
 <footer className="w-full py-12 px-6 flex flex-col items-center space-y-8 bg-transparent border-t border-white/5 relative z-10">
-<div className="flex gap-6">
-{[{i:"linkedin",u:"https://www.linkedin.com/in/jankleinx/"},{i:"github",u:"https://github.com/JanKleinX"}].map((s,x)=>(
-<a key={x} href={s.u} target="_blank" rel="noopener noreferrer" aria-label={s.i} className="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center border border-white/10 hover:bg-accent hover:border-accent transition-all group">
-<Icon name={s.i} className="w-5 h-5 text-white group-hover:scale-110 transition-transform"/>
-</a>
-))}
-</div>
+
+  
 <div className="text-white/40 text-[10px] tracking-[0.2em] font-black">© 2026 WAI.PAGES.DEV</div>
 </footer>
 <Modal isOpen={!!modal} onClose={()=>setModal(null)} title={modal?.title}>{modal?.content}</Modal>
