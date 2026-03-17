@@ -254,31 +254,14 @@ return (
 ))}
 </div>
 {/* JAN-KLEIN-OFFICIAL.png - FORCED VISIBLE with inline styles */}
-<div className="w-full pt-16 flex justify-center items-center animate-slide-up relative" style={{animationDelay:'0.6s', zIndex: 999}}>
-  <div className="bg-gradient-to-r from-accent/20 to-transparent p-1 rounded-3xl">
-    <div className="bg-black p-4 rounded-3xl border-2 border-accent/50">
-      <img 
-        src="https://raw.githubusercontent.com/waipages/waipages.github.io/refs/heads/main/JAN-KLEIN-OFFICIAL.png" 
-        alt="Jan Klein Official" 
-        width="200" 
-        height="200"
-        style={{
-          width: '200px',
-          height: '200px',
-          objectFit: 'cover',
-          borderRadius: '16px',
-          display: 'block',
-          border: '3px solid #2E2EFF',
-          boxShadow: '0 0 30px rgba(46,46,255,0.5)'
-        }}
-        onError={(e) => {
-          console.log('Image failed to load - showing fallback text');
-          e.target.style.display = 'none';
-          e.target.parentNode.innerHTML += '<div style="width:200px;height:200px;display:flex;align-items:center;justify-content:center;background:#2E2EFF;color:white;font-weight:bold;border-radius:16px;">JAN KLEIN</div>';
-        }}
-      />
-    </div>
-  </div>
+<div className="w-full flex justify-center my-8">
+  <img 
+    src="https://raw.githubusercontent.com/waipages/waipages.github.io/refs/heads/main/JAN-KLEIN-OFFICIAL.png" 
+    width="200" 
+    height="200"
+    className="border-4 border-accent rounded-2xl"
+    onError={(e) => e.target.style.display='none'}
+  />
 </div>
 {/* Debug text to confirm section is rendered */}
 <div className="text-accent text-xs mt-2 opacity-50">JAN KLEIN OFFICIAL - Should be visible above</div>
