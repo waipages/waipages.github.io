@@ -73,7 +73,6 @@ const Modal=({isOpen,onClose,title,children})=>(!isOpen?null:(
 const App=()=>{
 const [isVisible,setIsVisible]=useState(false);
 const [modal,setModal]=useState(null);
-const [imageError, setImageError] = useState(false);
 useEffect(()=>setIsVisible(true),[]);
 const features=[
 {title:"Neural Core",icon:"brain",desc:"Deep learning models & interfaces optimized for adaptive & real-time decision making",content:(
@@ -180,6 +179,7 @@ const aboutContent=(
 <h4 className="text-accent font-black tracking-widest text-sm">Background & Expertise</h4>
 <ul className="space-y-3">
 <li className="flex gap-3"><div className="mt-1.5 w-1.5 h-1.5 rounded-full bg-accent shrink-0"/><p className="text-white/70 text-sm">Creates & Supports Open Source Initiatives & Products. Professional Digital Planner. 100% Private, No Accounts, No Login, Offline First, Free Forever. <a href="https://p3c.netlify.app" target="_blank" className="text-accent font-bold hover:underline">p3c.netlify.app</a></p></li>
+<p><img src="/JAN-KLEIN-OFFICIAL.png" alt="JAN KLEIN" width="200" height="200"></P>
 <li className="flex gap-3"><div className="mt-1.5 w-1.5 h-1.5 rounded-full bg-accent shrink-0"/><p className="text-white/70 text-sm">Jan Klein is also a member of the <a href="https://www.w3.org/community/aikr/wiki/User:Janklein" target="_blank" className="text-accent font-bold hover:underline">W3C</a>, contributing to the Ai Knowledge Representation & Cognitive Ai community.</p></li>
 <li className="flex gap-3"><div className="mt-1.5 w-1.5 h-1.5 rounded-full bg-accent shrink-0"/><p className="text-white/70 text-sm">Contributes to the Google Ai Developer Forum about <a href="https://discuss.ai.google.dev/t/understandable-ai/38587" target="_blank" className="text-accent font-bold hover:underline">Understandable Ai</a> & to the Google Cloud Developer Forum <a href="https://discuss.google.dev/t/app-build-with-google-ai-studio/288747" target="_blank" className="text-accent font-bold hover:underline">App Build with Google Ai Studio</a></p></li>
 <li className="flex gap-3"><div className="mt-1.5 w-1.5 h-1.5 rounded-full bg-accent shrink-0"/><p className="text-white/70 text-sm">Jan's areas of expertise in Ai, Business, Government, Social Sector, Education, Information & Communications Technology, Media & Information, and Arts make him a versatile speaker and thought leader.</p></li>
@@ -252,28 +252,18 @@ return (
 <p className="text-white/60 text-base md:text-sm leading-relaxed">{f.desc}</p>
 </div>
 ))}
+<div className="text-white/40 text-[10px] tracking-[0.2em] font-black"><img src="/JAN-KLEIN-OFFICIAL.png" alt="JAN KLEIN" width="200" height="200"></div>
 </div>
-{/* JAN-KLEIN-OFFICIAL.png - FORCED VISIBLE with inline styles */}
-<div className="w-full flex justify-center my-8">
-  <img 
-    src="https://raw.githubusercontent.com/waipages/waipages.github.io/refs/heads/main/JAN-KLEIN-OFFICIAL.png" 
-    width="200" 
-    height="200"
-    className="border-4 border-accent rounded-2xl"
-    onError={(e) => e.target.style.display='none'}
-  />
-</div>
-{/* Debug text to confirm section is rendered */}
-<div className="text-accent text-xs mt-2 opacity-50">JAN KLEIN OFFICIAL - Should be visible above</div>
 </main>
-
-  </main>
-{/* ADD THIS EXACT CODE - JUST THE IMAGE */}
-<div className="w-full flex justify-center">
-  <img src="https://raw.githubusercontent.com/waipages/waipages.github.io/refs/heads/main/JAN-KLEIN-OFFICIAL.png" />
-</div>
 <footer className="w-full py-12 px-6 flex flex-col items-center space-y-8 bg-transparent border-t border-white/5 relative z-10">
-
+<div className="flex gap-6">
+{[{i:"linkedin",u:"https://www.linkedin.com/in/jankleinx/"},{i:"github",u:"https://github.com/JanKleinX"}].map((s,x)=>(
+<a key={x} href={s.u} target="_blank" rel="noopener noreferrer" aria-label={s.i} className="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center border border-white/10 hover:bg-accent hover:border-accent transition-all group">
+<Icon name={s.i} className="w-5 h-5 text-white group-hover:scale-110 transition-transform"/>
+</a>
+))}
+</div>
+<div className="text-white/40 text-[10px] tracking-[0.2em] font-black">© 2026 WAI.PAGES.DEV</div>
 </footer>
 <Modal isOpen={!!modal} onClose={()=>setModal(null)} title={modal?.title}>{modal?.content}</Modal>
 </div>
